@@ -2,36 +2,39 @@
 
 import { useUserStore } from "@/store/user-store";
 import { UserQr } from "@/components/UserQr";
+import { useEffect } from "react";
 
 export default function Home() {
 	const { setUser } = useUserStore();
 
-	try {
-		if (typeof window !== "undefined") {
-			const tg = window.Telegram.WebApp;
+	useEffect(() => {
+		try {
+			if (typeof window !== "undefined") {
+				const tg = window.Telegram.WebApp;
 
-			if (!tg) {
-				throw new Error(
-					"Telegram Web App API недоступен. Откройте приложение в Telegram."
-				);
+				if (!tg) {
+					throw new Error(
+						"Telegram Web App API недоступен. Откройте приложение в Telegram."
+					);
+				}
+
+				const tgUser = tg.initDataUnsafe?.user;
+
+				if (tgUser) {
+					const { id, username, photo_url } = tgUser;
+					setUser({
+						id: id.toString(),
+						username: username!,
+						imgUrl: photo_url || null,
+					});
+				} else {
+					throw new Error("Данные пользователя недоступны.");
+				}
 			}
-
-			const tgUser = tg.initDataUnsafe?.user;
-
-			if (tgUser) {
-				const { id, username, photo_url } = tgUser;
-				setUser({
-					id: id.toString(),
-					username: username!,
-					imgUrl: photo_url || null,
-				});
-			} else {
-				throw new Error("Данные пользователя недоступны.");
-			}
+		} catch (err) {
+			console.log((err as Error).message);
 		}
-	} catch (err) {
-		console.log((err as Error).message);
-	}
+	}, [setUser]);
 
 	return (
 		<div className="h-full px-4 py-6">
