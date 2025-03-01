@@ -79,6 +79,7 @@ export default function Home() {
 					{user.last_name && <p>Фамилия: {user.last_name}</p>}
 					{user.username && <p>Username: @{user.username}</p>}
 					<p>ID: {user.id}</p>
+					{JSON.stringify(user)}
 				</div>
 			) : (
 				<p>Загрузка...</p>
