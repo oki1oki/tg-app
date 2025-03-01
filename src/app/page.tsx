@@ -31,7 +31,6 @@ export default function Home() {
 		}
 	} catch (err) {
 		console.log((err as Error).message);
-		return null;
 	}
 
 	return (
