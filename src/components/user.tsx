@@ -4,8 +4,8 @@ import Image from "next/image";
 
 export function User() {
 	if (typeof window === "undefined") return null;
-	const tg = window.Telegram.WebApp;
-	const user = tg.initDataUnsafe.user;
+	const tg = window.Telegram?.WebApp;
+	const user = tg?.initDataUnsafe.user;
 
 	if (!user) return null;
 
