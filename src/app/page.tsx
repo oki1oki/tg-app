@@ -25,15 +25,6 @@ export default function Home() {
 					username: username!,
 					imgUrl: photo_url || null,
 				});
-
-				return (
-					<div className="h-full px-4 py-6">
-						Тут типа акции или компании
-						<div className="fixed bottom-4 left-1/2 -translate-y-1/2 -translate-x-1/2">
-							<UserQr />
-						</div>
-					</div>
-				);
 			} else {
 				throw new Error("Данные пользователя недоступны.");
 			}
@@ -42,4 +33,13 @@ export default function Home() {
 		console.log((err as Error).message);
 		return null;
 	}
+
+	return (
+		<div className="h-full px-4 py-6">
+			Тут типа акции или компании
+			<div className="fixed bottom-4 left-1/2 -translate-y-1/2 -translate-x-1/2">
+				<UserQr />
+			</div>
+		</div>
+	);
 }
