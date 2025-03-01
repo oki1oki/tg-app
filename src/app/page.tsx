@@ -1,20 +1,11 @@
 "use client";
 
 import { useEffect, useState } from "react";
-
+import Image from "next/image";
 // Типы для данных пользователя Telegram
-interface TelegramUser {
-	id: number;
-	first_name: string;
-	last_name?: string;
-	username?: string;
-	language_code?: string;
-	is_premium?: boolean;
-	allows_write_to_pm?: boolean;
-}
 
 export default function Home() {
-	const [user, setUser] = useState<TelegramUser | null>(null);
+	const [user, setUser] = useState<WebAppUser | null>(null);
 	const [error, setError] = useState<string | null>(null);
 
 	useEffect(() => {
@@ -34,9 +25,7 @@ export default function Home() {
 				tg.MainButton.show();
 
 				// Получаем информацию о пользователе
-				const userData = tg.initDataUnsafe.user as
-					| TelegramUser
-					| undefined;
+				const userData = tg.initDataUnsafe?.user;
 				if (userData) {
 					setUser(userData);
 				} else {
@@ -73,13 +62,19 @@ export default function Home() {
 					<p>{error}</p>
 				</div>
 			) : user ? (
-				<div>
+				<div className="flex flex-col">
 					<h1>Информация о пользователе:</h1>
 					<p>Имя: {user.first_name}</p>
 					{user.last_name && <p>Фамилия: {user.last_name}</p>}
 					{user.username && <p>Username: @{user.username}</p>}
 					<p>ID: {user.id}</p>
-					{JSON.stringify(user)}
+					<Image
+						src={user?.photo_url || ""}
+						width={60}
+						height={60}
+						alt="img"
+					/>
+					<p>{user.is_premium}</p>
 				</div>
 			) : (
 				<p>Загрузка...</p>
