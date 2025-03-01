@@ -25,7 +25,10 @@ export default function RootLayout({
 }>) {
 	return (
 		<html lang="ru">
-			<Script src="https://telegram.org/js/telegram-web-app.js" />
+			<Script
+				src="https://telegram.org/js/telegram-web-app.js"
+				strategy="beforeInteractive"
+			/>
 			<body
 				className={`${geistSans.variable} ${geistMono.variable} h-screen antialiased`}
 			>
